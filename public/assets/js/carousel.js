@@ -25,6 +25,7 @@ $(document).ready(function(){
 
 	// Marker Click
 	$('.carousel').on('click', '.markers li', function(){
+	alert("a");
 		//Set variables
 		var current = parseInt($(this).parents('.carousel').attr('data-current'));
 		var marker = parseInt($(this).attr('data-marker'));
