@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom'
-import NotFound from 'components/NotFound'
+import NotFound from 'components/NotFound/NotFound'
 import Header from "components/Header/Header"
 import Footer from "components/Footer/Footer"
 import 'assets/styles/style.css';

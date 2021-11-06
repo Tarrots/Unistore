@@ -1,9 +1,24 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
+
+import { Link } from "react-router-dom";
 
 export default function Header() {
-    useEffect(() => {
-        console.log(window.location.pathname);
-    })
+    /*
+    const handleUrl = (path) => {
+        setUrl(path);
+        return;
+    }
+     */
+
+    const [url, setUrl] = useState(window.location.pathname);
+    console.log(url); // Test url
+
+    /**
+     const handleUrl = (path) => {
+        setUrl(path);
+        return;
+    }
+     */
     return (
         <div>
             <nav className="navbar navbar-default">
@@ -29,74 +44,81 @@ export default function Header() {
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav">
-                            <li className={window.location.pathname==="/home" ? "active" :""}>
-                            <a href="/home">Home</a>
+                            <li onClick={() => {setUrl("/home");}} className={url === "/home" ? "active" : ""}>
+                                {/* <a href="/home">Home</a> */}
+                                <Link to="/home">Home</Link>
                             </li>
-                            <li className={window.location.pathname==="/catalog" ? "active" :""}>
-                            <a href="/catalog">Catalog</a>
+                            <li onClick={() => {setUrl("/catalog");}} className={url === "/catalog" ? "active" : ""}>
+                                {/* <a href="/catalog">Catalog</a> */}
+                                <Link to="/catalog">Catalog</Link>
                             </li>
-                            <li className={window.location.pathname==="/blog" ? "active" :""}>
-                            <a href="/blog">Blog</a>
+                            <li onClick={() => {setUrl("/blog");}} className={url === "/blog" ? "active" : ""}>
+                                {/* <a href="/blog">Blog</a> */}
+                                <Link to="/blog">Blog</Link>
                             </li>
-                            <li className={window.location.pathname==="/gallery" ? "active" :""}>
-                            <a href="/gallery">Gallery</a>
+                            <li onClick={() => {setUrl("/gallery");}} className={url === "/gallery" ? "active" : ""}>
+                                {/* <a href="/gallery">Gallery</a> */}
+                                <Link to="/gallery">Gallery</Link>
                             </li>
-                            <li className={window.location.pathname==="/cart" ? "active" :""}>
-                            <a href="/cart">Cart</a>
+                            <li onClick={() => {setUrl("/cart");}} className={url === "/cart" ? "active" : ""}>
+                                {/* <a href="/cart">Cart</a> */}
+                                <Link to="/cart">Cart</Link>
                             </li>
                             <li className="dropdown">
-                            <a
-                                href={this}
-                                className="dropdown-toggle"
-                                data-toggle="dropdown"
-                                role="button"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                            >
-                                More <span className="caret" />
-                            </a>
-                            <ul className="dropdown-menu">
-                                <li>
-                                <a href={this}>Product</a>
-                                </li>
-                                <li>
-                                <a href={this}>Cart</a>
-                                </li>
-                                <li>
-                                <a href={this}>Checkout</a>
-                                </li>
-                                <li>
-                                <a href={this}>FAQ</a>
-                                </li>
-                                <li>
-                                <a href={this}>Contacts</a>
-                                </li>
-                                <li role="separator" className="divider" />
-                                <li className="dropdown-header">Variations</li>
-                                <li>
-                                <a href={this}>Home</a>
-                                </li>
-                                <li>
-                                <a href={this}>Article Photo</a>
-                                </li>
-                                <li>
-                                <a href={this}>Article Video</a>
-                                </li>
-                                <li>
-                                <a href={this}>Article Review</a>
-                                </li>
-                            </ul>
+                                <a
+                                    href={this}
+                                    className="dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    role="button"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                >
+                                    More <span className="caret" />
+                                </a>
+                                <ul className="dropdown-menu">
+                                    <li>
+                                        <a href={this}>Product</a>
+                                    </li>
+                                    <li>
+                                        <a href={this}>Cart</a>
+                                    </li>
+                                    <li>
+                                        <a href={this}>Checkout</a>
+                                    </li>
+                                    <li>
+                                        <a href={this}>FAQ</a>
+                                    </li>
+                                    <li>
+                                        <a href={this}>Contacts</a>
+                                    </li>
+                                    <li role="separator" className="divider" />
+                                    <li className="dropdown-header">Variations</li>
+                                    <li>
+                                        <a href={this}>Home</a>
+                                    </li>
+                                    <li>
+                                        <a href={this}>Article Photo</a>
+                                    </li>
+                                    <li>
+                                        <a href={this}>Article Video</a>
+                                    </li>
+                                    <li>
+                                        <a href={this}>Article Review</a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
-                            <li>
-                            <a href="/login">
-                                {" "}
-                                <i className="ion-android-person" /> Login{" "}
-                            </a>
+                            <li onClick={() => {setUrl("/login");}} className={url === "/login" ? "active" : ""}>
+                                {/* <a href="/login">
+                                    {" "}
+                                    <i className="ion-android-person" /> Login{" "}
+                                </a> */}
+                                <Link to="/login"><i className="ion-android-person"/>&nbsp;Login</Link>
                             </li>
-                            <li>
-                            <a href="/signup"> Sign Up</a>
+                            <li onClick={() => {setUrl("/signup");}} className={url === "/signup" ? "active" : ""}>
+                                {/* <a href="/signup"> Sign Up</a> */}
+                                <Link to="/signup"> Sign Up</Link>
                             </li>
                         </ul>
                     </div>
