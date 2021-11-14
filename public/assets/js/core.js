@@ -156,3 +156,9 @@ function resizeVideo(source, id){
 
 	} // youtube adaptation---------------------------------------
 }// .resizeHeaderVideo
+
+/** Loader */
+$(window).on('load', function(event) {
+	$('body').removeClass('preloading');
+	$('.load').delay(200).fadeOut('fast');
+});

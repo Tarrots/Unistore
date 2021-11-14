@@ -42,7 +42,7 @@ export default function Footer() {
 					<h1 className="h3 upp">Join our newsletter</h1>
 					<p>Get more information and receive special discounts for our products.</p>
 					<hr className="offset-sm" />
-					<form action="" method="post">
+					<form action="" method="post"> 
 						<div className="input-group">
 							<input type="email" name="email" placeholder="E-mail" required className="form-control" />
 							<span className="input-group-btn">
