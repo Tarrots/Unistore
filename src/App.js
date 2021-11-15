@@ -16,7 +16,7 @@ const Signup = React.lazy(() => import('./pages/Signup/Signup'))
 export default function App() {
 	return (
 		<div>
-			<Suspense fallback={<div>Loading...</div>}>
+			<Suspense fallback={<div></div>}>
 				<BrowserRouter>
           <Header />
 

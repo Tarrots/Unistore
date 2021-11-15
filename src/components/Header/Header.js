@@ -3,22 +3,11 @@ import React, { useState } from 'react'
 import { Link } from "react-router-dom";
 
 export default function Header() {
-    /*
-    const handleUrl = (path) => {
-        setUrl(path);
-        return;
-    }
-     */
-
     const [url, setUrl] = useState(window.location.pathname);
-    console.log(url); // Test url
-
-    /**
-     const handleUrl = (path) => {
-        setUrl(path);
-        return;
+    const handleUrl = (value) => {
+        setUrl(value);
     }
-     */
+    console.log(url); // Test url
     return (
         <div>
             <nav className="navbar navbar-default">
@@ -37,30 +26,29 @@ export default function Header() {
                             <span className="icon-bar" />
                             <span className="icon-bar" />
                         </button>
-                        <a className="navbar-brand" href="/home">
-                            {" "}
-                            <i className="ion-cube" /> Unistore
-                        </a>
+                        <Link className="navbar-brand" to="/home" onClick={() => handleUrl("/home")}>
+                                <i className="ion-cube" /> Unistore
+                        </Link>
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav">
-                            <li onClick={() => {setUrl("/home");}} className={url === "/home" ? "active" : ""}>
+                            <li onClick={() => handleUrl("/home")} className={url === "/home" ? "active" : ""}>
                                 {/* <a href="/home">Home</a> */}
                                 <Link to="/home">Home</Link>
                             </li>
-                            <li onClick={() => {setUrl("/catalog");}} className={url === "/catalog" ? "active" : ""}>
+                            <li onClick={() => handleUrl("/catalog")} className={url === "/catalog" ? "active" : ""}>
                                 {/* <a href="/catalog">Catalog</a> */}
                                 <Link to="/catalog">Catalog</Link>
                             </li>
-                            <li onClick={() => {setUrl("/blog");}} className={url === "/blog" ? "active" : ""}>
+                            <li onClick={() => handleUrl("/blog")} className={url === "/blog" ? "active" : ""}>
                                 {/* <a href="/blog">Blog</a> */}
                                 <Link to="/blog">Blog</Link>
                             </li>
-                            <li onClick={() => {setUrl("/gallery");}} className={url === "/gallery" ? "active" : ""}>
+                            <li onClick={() => handleUrl("/gallery")} className={url === "/gallery" ? "active" : ""}>
                                 {/* <a href="/gallery">Gallery</a> */}
                                 <Link to="/gallery">Gallery</Link>
                             </li>
-                            <li onClick={() => {setUrl("/cart");}} className={url === "/cart" ? "active" : ""}>
+                            <li onClick={() => handleUrl("/cart")} className={url === "/cart" ? "active" : ""}>
                                 {/* <a href="/cart">Cart</a> */}
                                 <Link to="/cart">Cart</Link>
                             </li>
@@ -109,14 +97,14 @@ export default function Header() {
                             </li>
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
-                            <li onClick={() => {setUrl("/login");}} className={url === "/login" ? "active" : ""}>
+                            <li onClick={() => handleUrl("/login")} className={url === "/login" ? "active" : ""}>
                                 {/* <a href="/login">
                                     {" "}
                                     <i className="ion-android-person" /> Login{" "}
                                 </a> */}
                                 <Link to="/login"><i className="ion-android-person"/>&nbsp;Login</Link>
                             </li>
-                            <li onClick={() => {setUrl("/signup");}} className={url === "/signup" ? "active" : ""}>
+                            <li onClick={() => handleUrl("/signup")} className={url === "/signup" ? "active" : ""}>
                                 {/* <a href="/signup"> Sign Up</a> */}
                                 <Link to="/signup"> Sign Up</Link>
                             </li>
