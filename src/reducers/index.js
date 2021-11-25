@@ -1,9 +1,12 @@
 /**Root Reducer */
 
 import { combineReducers } from 'redux'
+import Catalog from './Catalog'
+import Cart from './Cart'
 
 const rootReducers = combineReducers({
-    // reducer
+    Catalog,
+    Cart
     // reducer
     // reducer
 })
