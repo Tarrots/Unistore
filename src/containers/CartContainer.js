@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import React from 'react';
 import Cart from '../pages/Catalog/components/Cart/Cart';
 
 function CartContainer({cart, product}) {
