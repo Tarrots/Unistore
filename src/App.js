@@ -4,6 +4,7 @@ import NotFound from 'components/NotFound/NotFound'
 import Header from "components/Header/Header"
 import Footer from "components/Footer/Footer"
 import 'assets/styles/style.css';
+import './App.css';
 
 // Lazy load - Code spliting
 const Home = React.lazy(() => import('./pages/Home/Home'))
@@ -13,7 +14,10 @@ const Gallery = React.lazy(() => import('./pages/Gallery/Gallery'))
 const Login = React.lazy(() => import('./pages/Login/Login'))
 const Signup = React.lazy(() => import('./pages/Signup/Signup'))
 
+
+
 export default function App() {
+
 	return (
 		<div>
 			<Suspense fallback={<div></div>}>
