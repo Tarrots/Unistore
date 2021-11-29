@@ -181,7 +181,7 @@
 			}
 
 			.filter .item.lite > .title > a[data-action="open"] {
-				display: block;
+				display: none;
 			}
 
 			.filter .item.lite > .controls {
@@ -336,6 +336,7 @@
 	    background-color: #fff;
 	    border: none;
 	    border-radius: 3px !important;
+		cursor: pointer;
 	}
 
 	.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
@@ -433,7 +434,7 @@
 	/* Frame */
 		.cart {
 			position: fixed;
-			display: none;
+			display: block;
 			top: 0;
 			left: 0;
 			width: 100%;
