@@ -1,10 +1,8 @@
 import React from 'react'
 
 export default function SlideItem(props) {
-  let className="item";
-  if(props.isActive) {
-    className += " active"
-  }
+  let className="item " + props.active;
+
     return (
       <div className={className} data-marker={props.marker}>
         <img
