@@ -3,9 +3,16 @@ import React, { useState } from 'react'
 import { Link } from "react-router-dom";
 
 export default function Header() {
+
     const [url, setUrl] = useState(window.location.pathname);
     const handleUrl = (value) => {
         setUrl(value);
+    }
+
+    const logout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('name');
+        window.location.reload();
     }
     console.log(url); // Test url
     return (
@@ -96,19 +103,27 @@ export default function Header() {
                                 </ul>
                             </li>
                         </ul>
-                        <ul className="nav navbar-nav navbar-right">
-                            <li onClick={() => handleUrl("/login")} className={url === "/login" ? "active" : ""}>
-                                {/* <a href="/login">
-                                    {" "}
-                                    <i className="ion-android-person" /> Login{" "}
-                                </a> */}
-                                <Link to="/login"><i className="ion-android-person"/>&nbsp;Login</Link>
-                            </li>
-                            <li onClick={() => handleUrl("/signup")} className={url === "/signup" ? "active" : ""}>
-                                {/* <a href="/signup"> Sign Up</a> */}
-                                <Link to="/signup"> Sign Up</Link>
-                            </li>
-                        </ul>
+                        {
+                            (localStorage.getItem('token') != null && localStorage.getItem('name') != null)?
+                                <ul className="nav navbar-nav navbar-right">
+                                    <li>
+                                        <a href="#name">Hi, {localStorage.getItem('name')}</a>
+                                    </li>
+                                    <li>
+                                        <a href="#logout" onClick={() => logout()}>Logout</a>
+                                    </li>
+                                </ul>
+                            : 
+                                <ul className="nav navbar-nav navbar-right">
+                                    <li onClick={() => handleUrl("/login")} className={url === "/login" ? "active" : ""}>
+                                        <Link to="/login"><i className="ion-android-person"/>&nbsp;Login</Link>
+                                    </li>
+                                    <li onClick={() => handleUrl("/signup")} className={url === "/signup" ? "active" : ""}>
+                                        {/* <a href="/signup"> Sign Up</a> */}
+                                        <Link to="/signup"> Sign Up</Link>
+                                    </li>
+                                </ul>
+                        }
                     </div>
                     {/*/.nav-collapse */}
                 </div>
