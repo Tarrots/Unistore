@@ -1,15 +1,8 @@
 import React from 'react'
 
-function Checkout({cart, product}) {
+function Checkout({product}) {
     const Total = () => {
-        var result = '', total = 0;
-        result = cart.product.map((prod) => {
-            return parseInt(product[prod.id ].price ) * parseInt(prod.quantity)
-        })
-        for(let lgt = 0; lgt < cart.product.length ; lgt ++)
-        {
-            total += parseInt(result[lgt])
-        }
+        var total = 0;
         return total;
     }
     return (

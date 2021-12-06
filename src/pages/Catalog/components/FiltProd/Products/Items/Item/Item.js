@@ -1,8 +1,18 @@
 import React from 'react'
 
-export default function Item({prod,onAddCart}) {
-    const AddCart = (id) => {
-        onAddCart(id)
+export default function Item({id,prod}) {
+    const addOnCart = (id) => {
+        var cart = JSON.parse(localStorage.getItem('carts'))
+        cart.quantity++
+        let item = [
+            {
+                id: id,
+                quantity: 1
+            }
+        ]
+        cart.product.push(item)
+        localStorage.setItem('carts',JSON.stringify(cart))
+        console.log(cart.product)
     }
     return (
         <div className="col-sm-6 col-md-4 product">
@@ -13,7 +23,7 @@ export default function Item({prod,onAddCart}) {
                 <p className="price">${prod.price}</p>
                 <label>{prod.category}</label>
                 <a href="../catalog/product.html" className="btn btn-link"> Details</a>
-                <button className="btn btn-primary btn-rounded btn-sm" onClick={() => AddCart(prod.id)}>
+                <button className="btn btn-primary btn-rounded btn-sm" onClick={() => addOnCart(id)}>
                     <i className="ion-bag" />
                     Add to cart
                 </button>

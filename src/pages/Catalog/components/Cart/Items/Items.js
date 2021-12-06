@@ -3,10 +3,14 @@ import Item from './Item/Item'
  function Items({cart, product}) {
     const showCart = () => {
         var result = null;
-        if(cart.quantity <= 0)
+        if(JSON.parse(localStorage.getItem('carts')).quantity === 0)
             return <h4>CART EMTY!</h4>;
         result = cart.product.map((prod,index) => {
-            return <Item key={index} prod={product[prod.id]} quantity={prod.quantity}/>
+            let item = JSON.parse(localStorage.getItem('catalog'))
+
+            let carts = JSON.parse(localStorage.getItem('carts'))
+
+            return <Item key={index} prod={item[index]} quantity={carts.product[index]}/>
         });
         return result;
     }

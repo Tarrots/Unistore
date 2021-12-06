@@ -10,15 +10,14 @@ SignupForm.defaultProps = {
   onSignup: null
 }
 
-export default function SignupForm({onSignup, error, setError}) {
-  const [details, setDetails] = useState({name: "", username: "", phone: "", email: "", password: "", rePassword: "",});
+export default function SignupForm({onSignup, error}) {
+  const [details, setDetails] = useState({fname: "", phone: "", email: "", password: "", rePassword: "",});
 
   const submitHandler = e => {
     e.preventDefault();
 
     onSignup(details);
   }
-
 
   return (
     <>
@@ -34,62 +33,32 @@ export default function SignupForm({onSignup, error, setError}) {
               <div className="container-fluid">
                 <div className="row">
                   <div className="col-sm-12">
-                    <input type="text" name="name" placeholder="Name" required={true} className="form-control" 
-                      onChange={e => {
-                        setDetails({...details, name: e.target.value});
-                        setError("");
-                        }
-                      }
-                      value={details.name}
+                    <input type="text" name="name" placeholder="First Name" required={true} className="form-control" 
+                      onChange={e => setDetails({...details, fname: e.target.value})}
+                      value={details.fname}
                     /><br/>
                   </div>
                   <div className="col-sm-12">
                     <input type="text" name="phone" placeholder="Phone" required={true} className="form-control" 
-                      onChange={e => {
-                        setDetails({...details, phone: e.target.value});
-                        setError("");
-                        }
-                      }
+                      onChange={e => setDetails({...details, phone: e.target.value})}
                       value={details.phone}
                     /><br/>
                   </div>
                   <div className="col-sm-12">
                     <input type="email" name="email" placeholder="E-mail" required={true} className="form-control" 
-                      onChange={e => {
-                        setDetails({...details, email: e.target.value})
-                        setError("")  
-                        }
-                      }
+                      onChange={e => setDetails({...details, email: e.target.value})}
                       value={details.email}
                     /><br/>
                   </div>
                   <div className="col-sm-12">
-                    <input type="text" name="username" placeholder="Username" required={true} className="form-control" 
-                      onChange={e => {
-                        setDetails({...details, username: e.target.value})
-                        setError("")  
-                        }
-                      }
-                      value={details.username}
-                    /><br/>
-                  </div>
-                  <div className="col-sm-12">
                     <input type="password" name="password" placeholder="Password" required={true} className="form-control" 
-                      onChange={e => {
-                        setDetails({...details, password: e.target.value})
-                        setError("");
-                        }
-                      }
+                      onChange={e => setDetails({...details, password: e.target.value})}
                       value={details.password}
                     /><br/>
                   </div>
                   <div className="col-sm-12">
                     <input type="password" name="password-confirm" placeholder="Confirm Password" required={true} className="form-control" 
-                      onChange={e => {
-                        setDetails({...details, rePassword: e.target.value})
-                        setError("");
-                        }
-                      }
+                      onChange={e => setDetails({...details, rePassword: e.target.value})}
                       value={details.rePassword}
                     /><br/>
                   </div>

@@ -1,23 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Catalog from '../pages/Catalog/Catalog'
-import Item from 'pages/Catalog/components/FiltProd/Products/Items/Item/Item'
 import { actAddToCart } from '../actions/index'
 
-function CatalogContainer({product, onAddCart}) {
 
-    
-    const showProduct = (a) => {
-        var result = null;
-        result = product.map((prod,index) => {
-            return <Item key={index} prod={prod} onAddCart={onAddCart}/>
-        });
-        return result;
-    }
+function CatalogContainer({product}) {
     return (
-        <Catalog product={product} onAddCart={onAddCart}>
-        {showProduct()}</Catalog>
-        
+        <Catalog product={product}/>
     )
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import Filters from './Filters/Filters'
 import Products from './Products/Products'
-export default function FiltProd({product,children, onAddCart}) {
+export default function FiltProd({product}) {
     return (
         <div className="container">
             <div className="row">
@@ -10,7 +10,7 @@ export default function FiltProd({product,children, onAddCart}) {
                 {/* Filter */}
 
                 {/* Products */}
-                <Products product={product} onAddCart={onAddCart}>{children}</Products>
+                <Products product={product}/>
                 {/* Products */}
             </div>
         </div>

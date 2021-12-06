@@ -46,6 +46,7 @@
     ]
   },
   "devDependencies": {
+    "@types/query-string": "^6.3.0",
     "dotenv-webpack": "^7.0.3"
   }
 }

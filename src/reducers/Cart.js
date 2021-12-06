@@ -1,6 +1,6 @@
 import * as types from '../constant/ActionsType'
 
-var carts = JSON.parse(localStorage.getItem('cart'))
+var carts = JSON.parse(localStorage.getItem('carts'))
 const initState = carts ? carts : {
     isActive: false,
     quantity: 0,
@@ -8,7 +8,7 @@ const initState = carts ? carts : {
     ],
     total: 0
 };
-
+localStorage.setItem('carts',JSON.stringify(initState))
 
 
 const Cart = (state = initState, action) => {
@@ -16,7 +16,7 @@ const Cart = (state = initState, action) => {
     switch (action.type) {
         case types.ADD_TO_CART_SUCCESS:
             state.quantity ++
-            /**-------------------------------- */
+            /*--------------------------------*/
             // Tách ra hàm riêng
             if(state.product.length > 0)
             {
@@ -27,8 +27,7 @@ const Cart = (state = initState, action) => {
                         products.push(index)
                 }
             }
-            // Chưa tách ra được :'(
-            /**-------------------------------- */
+            /*--------------------------------*/
             if(index > -1 )
             {
                 for(let i = 0 ; i < products.length ; i ++)

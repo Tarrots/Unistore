@@ -1,31 +1,25 @@
 /* eslint-disable no-unused-vars */
-import authApi from 'api/authApi';
+import testApi from 'api/testApi';
 import React, {useEffect, useState} from 'react'
 import LoginForm from './component/LoginForm'
-import axios from 'axios';
 
 export default function Login() {
+
+    const admin = {
+        email: "admin@admin.com",
+        password: "123456"
+    }
     
-    const [user, setUser] = useState({username: "", password: ""});
+    const [user, setUser] = useState({email: "", password: ""});
     const [error, setError] = useState("");
     
     
     const Login = async (details) => {
-
-        console.log(details);
-        const response = await authApi.signin(details);
-        if(parseInt(response.status) === 401) {
-            setError("Username or password is incorrect");
+        if(details.email === admin.email && details.password === admin.password) {
+            console.log("Login ok");
+        } else {
+            console.log("details don't match");
         }
-        else { 
-            localStorage.setItem('token',response.accessToken);
-            localStorage.setItem('name',response.name);
-
-            window.location.href="/catalog";
-            console.log(localStorage.getItem('token'));
-        }
-        
-        
     }
 
     const Logout = () => {
@@ -33,7 +27,7 @@ export default function Login() {
     }
     return (
         <>
-            <LoginForm onLogin={Login} error={error} setError={setError} />
+            <LoginForm onLogin={Login} error={error} />
         </>
     )
 }

@@ -1,6 +1,6 @@
 import axiosClient from './axiosClient'
 
-const productApi = {
+const catalogAPI = {
     getAll: (params) => {
         const url = "/products";
         return axiosClient.get(url, { params });
@@ -9,6 +9,6 @@ const productApi = {
         const url = `/products/${id}`;
         return axiosClient.get(url);
     },
-}
+};
 
-export default productApi;
+export default catalogAPI;
