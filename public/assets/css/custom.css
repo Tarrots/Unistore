@@ -144,7 +144,11 @@
 		}
 
 		.filter .item > .controls input{
-			display: none;
+			float: left;
+			width: 14px;
+			height: 14px;
+			border: 1px solid #777;
+			margin: 0 10px 0 0;
 		}
 
 		.filter .item > .title > a[data-action="open"] {
@@ -234,12 +238,12 @@
 				transition: all 0.3s;
 			}
 			
-			.filter .item > .controls > .checkbox-group[data-status="inactive"] > .checkbox > i{
+			/* .filter .item > .controls > .checkbox-group[data-status="inactive"] > .checkbox > i{
 				opacity: 0;
 			}
 			.filter .item > .controls > .checkbox-group[data-status="active"] > .checkbox > i{
 				opacity: 1;
-			}
+			} */
 
 			.filter .item > .controls > .checkbox-group > .label{
 				float: left;
@@ -1347,6 +1351,7 @@
 			margin-top: 40px;
 			padding-bottom: 25px;
 			border: 1px solid #fff;
+			min-height: 350px;
 
 			-webkit-transition: all 0.3s;
 			-moz-transition: all 0.3s;

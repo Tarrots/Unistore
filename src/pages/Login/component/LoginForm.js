@@ -10,8 +10,8 @@ LoginForm.defaultProps = {
 }
 
 
-function LoginForm({ onLogin, error }) {
-  const [details, setDetails] = useState({ email: "", password: ""});
+function LoginForm({ onLogin, error, setError }) {
+  const [details, setDetails] = useState({ username: "", password: ""});
 
   const submitHandler = e => {
     e.preventDefault();
@@ -30,11 +30,21 @@ function LoginForm({ onLogin, error }) {
               <br/>
 
               <form className="signin" onSubmit={submitHandler}>
-                  <input type="email" name="email" placeholder="E-mail" required="" className="form-control" onChange={e => setDetails({...details, email: e.target.value})} value={details.email} />
+                  <input type="text" name="username" placeholder="Username" required={true} className="form-control" 
+                  onChange={e => {
+                    setDetails({...details, username: e.target.value});
+                    setError("");
+                  }}
+                  value={details.username} />
                   <br/>
-                  <input type="password" name="password" placeholder="Password" required="" className="form-control" onChange={e => setDetails({...details, password: e.target.value})} value={details.password} />
+                  <input type="password" name="password" placeholder="Password" required={true} className="form-control" 
+                  onChange={e => {
+                    setDetails({...details, password: e.target.value})
+                    setError("");
+                  }} 
+                  value={details.password} />
                   <br/>
-                  <div className="error"></div>
+                  <div className="error"> { error } </div>
                   <button type="submit" className="btn btn-primary">Sign In</button>
                   <a href="#forgin-password" data-action="Forgot-Password" className="xs-margin">Password recovery </a>
                   <br/><br/>
@@ -43,11 +53,11 @@ function LoginForm({ onLogin, error }) {
                   If you already have an account with us, please login.
                   </p>
                   <hr className="offset-xs" />
-                  <a href="#facebook" className="btn btn-facebook"> <i className="ion-social-facebook"></i> Login with Facebook </a>
+                  {/* <a href="#facebook" className="btn btn-facebook"> <i className="ion-social-facebook"></i> Login with Facebook </a> */}
                   <hr className="offset-sm" />
 
                   <p>
-                  Don't have an account? Create one now! <a href="../signup/"> Registration </a>
+                  Don't have an account? Create one now! <a href="../signup"> Registration </a>
                   </p>
 
               </form>

@@ -8,11 +8,12 @@ import './App.css';
 
 // Lazy load - Code spliting
 const Home = React.lazy(() => import('./pages/Home/Home'))
-const CatalogContainer = React.lazy(() => import('./containers/CatalogContainer.js'))
 const Blog = React.lazy(() => import('./pages/Blog/Blog'))
 const Gallery = React.lazy(() => import('./pages/Gallery/Gallery'))
 const Login = React.lazy(() => import('./pages/Login/Login'))
 const Signup = React.lazy(() => import('./pages/Signup/Signup'))
+const Products = React.lazy(() => import('./pages/Products/Products'))
+const Details = React.lazy(() => import('./pages/Details/Details'))
 
 
 
@@ -29,11 +30,12 @@ export default function App() {
             <Redirect exact from="/" to="/home"></Redirect>
 
             <Route path="/home" component={Home}></Route>
-            <Route path="/catalog" component={CatalogContainer}></Route>
+            <Route path="/catalog" component={Products}></Route>
             <Route path="/blog" component={Blog}></Route>
             <Route path="/gallery" component={Gallery}></Route>
             <Route path="/login" component={Login}></Route>
             <Route path="/signup" component={Signup}></Route>
+            <Route path="/details" component={Details}></Route>
             <Route component={NotFound}></Route>
           </Switch>
 
