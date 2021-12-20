@@ -7,6 +7,10 @@ export default function Signup() {
 
 	const [user, setUser] = useState({username: "", email: "", password: "", name: "", phone: "", role:null});
 
+	useEffect(() => {
+        if(localStorage.getItem("token")) window.location.href = "/home"    
+    })
+
 	const Signup = async (details) => {
 		
 		if(details.password !== details.rePassword) {

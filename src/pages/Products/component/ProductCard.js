@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 export default function ProductCard({data, addToCart}) {
 	return (
@@ -11,9 +12,11 @@ export default function ProductCard({data, addToCart}) {
 					<h1 className="h4">{data.name}</h1>
 					<p className="price">${data.price}</p>
 					<label>{data.catalog}</label>
-
-					<a href={"/details?id="+data.productId} className="btn btn-link"> Details</a>
-					<button className="btn btn-primary btn-rounded btn-sm" onClick={() => addToCart(data)}> <i className="ion-bag"></i> Add to cart</button>
+					<Link to={"/details?id="+data.productId} className="btn btn-link">Details</Link>
+					{/* <a href={"/details?id="+data.productId} className="btn btn-link"> Details</a> */}
+					<button className="btn btn-primary btn-rounded btn-sm" onClick={() => addToCart(data)}> 
+						<i className="ion-bag"></i> Add to cart
+					</button>
 				</div>
 			</div>
 		</>

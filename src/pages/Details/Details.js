@@ -37,7 +37,7 @@ export default function Details() {
 		}
 
 		fetchProductList();
-	},[])
+	},[id]);
 
 	const addToCart = (data) => {
     const initCart = {
@@ -88,7 +88,7 @@ export default function Details() {
 
 	return (
 		<>
-			<Alert/>
+			<Alert type="success" text={"Product added to your cart."}/>
 			<ProductDetail product={product} addToCart={addToCart}/>
 		</>
 	)

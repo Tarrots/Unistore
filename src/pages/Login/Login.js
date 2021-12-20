@@ -9,20 +9,29 @@ export default function Login() {
     const [user, setUser] = useState({username: "", password: ""});
     const [error, setError] = useState("");
     
+    useEffect(() => {
+        if(localStorage.getItem("token")) window.location.href = "/home"    
+    })
     
     const Login = async (details) => {
 
         console.log(details);
-        const response = await authApi.signin(details);
-        if(parseInt(response.status) === 401) {
+        try {
+            const response = await authApi.signin(details);
+            if(parseInt(response.status) == 401) {
+                console.log("ufguw")
+                setError("Username or password is incorrect");
+            }
+            else { 
+                localStorage.setItem('token',response.accessToken);
+                localStorage.setItem('name',response.name);
+    
+                window.location.href="/catalog";
+                console.log(localStorage.getItem('token'));
+            }
+        } catch(err) {
+            console.log(err)
             setError("Username or password is incorrect");
-        }
-        else { 
-            localStorage.setItem('token',response.accessToken);
-            localStorage.setItem('name',response.name);
-
-            window.location.href="/catalog";
-            console.log(localStorage.getItem('token'));
         }
         
         

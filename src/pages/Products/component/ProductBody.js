@@ -4,9 +4,15 @@ import Pagination from './Pagination'
 
 export default function ProductBody({data, handlePagination, addToCart}) {
 
-	const productList = (data.data).map((product, index) => {
-		return <ProductCard data={product} key={index} addToCart={addToCart}/>
-	});
+  console.log(data);
+  let productList;
+  if(data.status === 'ok'){
+    productList = (data.data).map((product, index) => {
+      return <ProductCard data={product} key={index} addToCart={addToCart}/>
+    });
+  } else {
+    productList = data.message;
+  }
 
 	return (
 		<>
@@ -23,27 +29,27 @@ export default function ProductBody({data, handlePagination, addToCart}) {
 
               <div className="controls">
                 <div className="checkbox-group">
-                    <input type="checkbox" name="checkbox" id="all" value="" checked="checked" onClick={this}/>
+                    <input type="checkbox" name="checkbox" id="all" defaultValue="" defaultChecked="checked" onClick={this}/>
 										<label htmlFor="all" className="label">all</label>
                 </div>
                 <div className="checkbox-group">
                     {/* <div className="checkbox"><i className="ion-android-done"></i></div>
                     <div className="label" data-value="Laptops">MSI</div> */}
-                    <input type="checkbox" name="checkbox" id="msi" value="msi" onClick={this} />
+                    <input type="checkbox" name="checkbox" id="msi" defaultValue="msi" onClick={this} />
 										<label htmlFor="msi" className="label">MSI</label>
                 </div>
 
                 <div className="checkbox-group" data-status="inactive">
                     {/* <div className="checkbox"><i className="ion-android-done"></i></div> */}
                     {/* <div className="label" data-value="Tablets">DELL</div> */}
-                    <input type="checkbox" name="checkbox" id="dell" value="dell" onClick={this} />
+                    <input type="checkbox" name="checkbox" id="dell" defaultValue="dell" onClick={this} />
 										<label htmlFor="dell" className="label">DELL</label>
                 </div>
 
                 <div className="checkbox-group" data-status="inactive">
                     {/* <div className="checkbox"><i className="ion-android-done"></i></div>
                      <div className="label" data-value="Hybrid">Asus</div> */}
-                    <input type="checkbox" name="checkbox" id="asus" value="asus" onClick={this} />
+                    <input type="checkbox" name="checkbox" id="asus" defaultValue="asus" onClick={this} />
 										<label htmlFor="asus" className="label">Asus</label>
                 </div>
               </div>
@@ -61,13 +67,13 @@ export default function ProductBody({data, handlePagination, addToCart}) {
               <div className="controls grid">
                 <div className="checkbox-group" data-status="inactive">
                     {/* <div className="checkbox"><i className="ion-android-done"></i></div> */}
-                    <input type="checkbox" name="checkbox" value="" onClick={this} />
+                    <input type="checkbox" name="checkbox" defaultValue="" onClick={this} />
                     <div className="label" data-value="7 in">i5</div>
                 </div>
 
                 <div className="checkbox-group" data-status="inactive">
                     {/* <div className="checkbox"><i className="ion-android-done"></i></div> */}
-                    <input type="checkbox" name="checkbox" value="" onClick={this} />
+                    <input type="checkbox" name="checkbox" defaultValue="" onClick={this} />
                     <div className="label" data-value="10 in">i7</div>
                 </div>
               </div>

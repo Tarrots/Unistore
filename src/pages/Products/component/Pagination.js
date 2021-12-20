@@ -22,13 +22,14 @@ export default function Pagination({page, handlePagination}) {
 			else { 
 				return <PageItem key={index} number={number} isActive={false} handlePagination={handlePagination} />
 			}
-		}
+		} 
 		else {
 			if (flag === false) {
 				flag = true;
 				return <li>...</li>;
 			}
 		}
+		return null;
 	})
 	
 

@@ -1,6 +1,5 @@
 .alert {
   padding: 20px;
-  background-color: #2FB886;
   color: white;
   transform: translate(10%, 10%);
   width: 20%;
@@ -22,4 +21,17 @@
 
 .closebtn:hover {
   color: black;
+}
+
+.success {
+  background-color: #2FB886 !important;
+}
+.danger {
+  background-color: #DC3545 !important;
+}
+.infor {
+  background-color: #17A2B8 !important;
+}
+.warning {
+  background-color: #FFC337 !important;
 }

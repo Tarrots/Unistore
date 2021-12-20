@@ -21,22 +21,22 @@ export default function Tags() {
         <p>Search by tags</p>
         <div className="btn-group" data-toggle="buttons">
           <label className="btn btn-default btn-xs active">
-            <input type="radio" name="options" id="option1" checked value="All products" />All products
+            <input type="radio" name="options" id="option1" defaultChecked defaultValue="All products" />All products
           </label>
           <label className="btn btn-default btn-xs">
-            <input type="radio" name="options" id="option2" value="Business" /> Business
+            <input type="radio" name="options" id="option2" defaultValue="Business" /> Business
           </label>
           <label className="btn btn-default btn-xs">
-            <input type="radio" name="options" id="option3" value="Home" /> Home
+            <input type="radio" name="options" id="option3" defaultValue="Home" /> Home
           </label>
           <label className="btn btn-default btn-xs">
-            <input type="radio" name="options" id="option4" value="Mobility" /> Mobility
+            <input type="radio" name="options" id="option4" defaultValue="Mobility" /> Mobility
           </label>
           <label className="btn btn-default btn-xs">
-            <input type="radio" name="options" id="option5" value="Powerfull" /> Powerfull
+            <input type="radio" name="options" id="option5" defaultValue="Powerfull" /> Powerfull
           </label>
           <label className="btn btn-default btn-xs">
-            <input type="radio" name="options" id="option6" value="Gaming" /> Gaming
+            <input type="radio" name="options" id="option6" defaultValue="Gaming" /> Gaming
           </label>
         </div>
       </div>
