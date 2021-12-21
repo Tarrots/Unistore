@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import 'assets/styles/custom.css'
 
 import { Link } from "react-router-dom";
 
@@ -59,7 +60,7 @@ export default function Header() {
                                 {/* <a href="/cart">Cart</a> */}
                                 <Link to="/cart">Cart</Link>
                             </li>
-                            <li className="dropdown">
+                            {/* <li className="dropdown">
                                 <a
                                     href={this}
                                     className="dropdown-toggle"
@@ -101,7 +102,7 @@ export default function Header() {
                                         <a href={this}>Article Review</a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> */}
                         </ul>
                         {
                             (localStorage.getItem('token') != null && localStorage.getItem('name') != null)?

@@ -1,13 +1,17 @@
 import React from 'react'
 
-export default function ElementButton() {
+export default function ElementButton({showModal}) {
+
+    
+
     return (
         <div className="row element-button">
             <div className="col-sm-2">
-                <a className="btn btn-add btn-sm" href="form-add-nhan-vien.html" title="Thêm"><i className="fas fa-plus" />
-                    Tạo mới nhân viên</a>
+                <button type="button" className="btn btn-add btn-sm" data-toggle="modal" data-target="#ModalUP" title="Thêm" onClick={() => showModal("")}>
+                    <i className="fas fa-plus"/>
+                    Thêm sản phẩm</button>
             </div>
-            <div className="col-sm-2">
+            {/* <div className="col-sm-2">
                 <a className="btn btn-delete btn-sm nhap-tu-file" href='/admin' type="button" title="Nhập" ><i className="fas fa-file-upload" /> Tải từ file</a>
             </div>
             <div className="col-sm-2">
@@ -24,7 +28,7 @@ export default function ElementButton() {
             </div>
             <div className="col-sm-2">
                 <a className="btn btn-delete btn-sm" href='/admin' type="button" title="Xóa" ><i className="fas fa-trash-alt" /> Xóa tất cả </a>
-            </div>
+            </div> */}
         </div>
     )
 }

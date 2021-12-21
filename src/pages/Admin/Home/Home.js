@@ -1,8 +1,84 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from '../components/Header/Header'
 import Navbar from '../components/Navbar/Navbar'
+import '../admin.css'
+import adminApi from 'api/adminApi'
+import orderApi from 'api/orderApi'
+import userApi from 'api/userApi'
 
 export default function Home() {
+  
+  const [totalUser, setTotalUser] = useState(0);
+  const [totalProduct, setTotalProduct] = useState(0);
+  const [totalOrder, setTotalOrder] = useState(0);
+  const [outOfStock, setOutOfStock] = useState(0);
+
+  // const [orderTab, setOrderTab] = useState();
+  const [orders, setOrders] = useState([{
+    "order_id": 0,
+    "user_id": 0,
+    "name": "",
+    "status": "",
+    "quantity": 0,
+    "total": 0,
+    "address": "",
+    "purchase_date": "",
+    "received_date": "",
+    "id": 0
+  }]);
+
+  const [users, setUsers] = useState([{
+    "id": 0,
+    "username": "",
+    "email": "",
+    "password": "",
+    "roles": [],
+    "phone": "",
+    "enable": true,
+    "name": ""
+  }])
+
+
+  useEffect(() => {
+    async function getTotalCount() {
+      try {
+        const res = await adminApi.dashboard();
+
+        setTotalUser(res.data.countUser);
+        setTotalProduct(res.data.countProduct);
+        setTotalOrder(res.data.countOrder);
+        setOutOfStock(res.data.countOutOfStock);
+
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    async function getOrders() {
+      try {
+        const res = await orderApi.getAll();
+        setOrders(res.data);
+      } catch (err) {
+        console.log(err)
+      }
+      
+    }
+
+    async function getUsers() {
+      try {
+        const res = await userApi.getAll();
+        setUsers(res.data);
+      } catch (err) {
+        console.log(err)
+      }
+      
+    }
+
+    getTotalCount();
+    getOrders();
+    getUsers();
+  }, [])
+
   return (
     <div>
       <Header/>
@@ -21,15 +97,15 @@ export default function Home() {
         </div>
         <div className="row">
           {/*Left*/}
-          <div className="col-md-12 col-lg-6">
+          <div className="col-md-12 col-lg-12">
             <div className="row">
               {/* col-6 */}
               <div className="col-md-6">
                 <div className="widget-small primary coloured-icon"><i className="icon bx bxs-user-account fa-3x" />
                   <div className="info">
-                    <h4>Tổng khách hàng</h4>
-                    <p><b>56 khách hàng</b></p>
-                    <p className="info-tong">Tổng số khách hàng được quản lý.</p>
+                    <h4>Tổng tài khoản</h4>
+                    <p><b>{totalUser} tài khoản</b></p>
+                    <p className="info-tong">Tổng số tài khoản được quản lý.</p>
                   </div>
                 </div>
               </div>
@@ -38,7 +114,7 @@ export default function Home() {
                 <div className="widget-small info coloured-icon"><i className="icon bx bxs-data fa-3x" />
                   <div className="info">
                     <h4>Tổng sản phẩm</h4>
-                    <p><b>1850 sản phẩm</b></p>
+                    <p><b>{totalProduct} sản phẩm</b></p>
                     <p className="info-tong">Tổng số sản phẩm được quản lý.</p>
                   </div>
                 </div>
@@ -48,8 +124,8 @@ export default function Home() {
                 <div className="widget-small warning coloured-icon"><i className="icon bx bxs-shopping-bags fa-3x" />
                   <div className="info">
                     <h4>Tổng đơn hàng</h4>
-                    <p><b>247 đơn hàng</b></p>
-                    <p className="info-tong">Tổng số hóa đơn bán hàng trong tháng.</p>
+                    <p><b>{totalOrder} đơn hàng</b></p>
+                    <p className="info-tong">Tổng số hóa đơn bán hàng.</p>
                   </div>
                 </div>
               </div>
@@ -58,7 +134,7 @@ export default function Home() {
                 <div className="widget-small danger coloured-icon"><i className="icon bx bxs-error-alt fa-3x" />
                   <div className="info">
                     <h4>Sắp hết hàng</h4>
-                    <p><b>4 sản phẩm</b></p>
+                    <p><b>{outOfStock} sản phẩm</b></p>
                     <p className="info-tong">Số sản phẩm cảnh báo hết cần nhập thêm.</p>
                   </div>
                 </div>
@@ -78,38 +154,46 @@ export default function Home() {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>AL3947</td>
-                          <td>Phạm Thị Ngọc</td>
-                          <td>
-                            19.770.000 đ
-                          </td>
-                          <td><span className="badge bg-info">Chờ xử lý</span></td>
-                        </tr>
-                        <tr>
-                          <td>ER3835</td>
-                          <td>Nguyễn Thị Mỹ Yến</td>
-                          <td>
-                            16.770.000 đ
-                          </td>
-                          <td><span className="badge bg-warning">Đang vận chuyển</span></td>
-                        </tr>
-                        <tr>
-                          <td>MD0837</td>
-                          <td>Triệu Thanh Phú</td>
-                          <td>
-                            9.400.000 đ
-                          </td>
-                          <td><span className="badge bg-success">Đã hoàn thành</span></td>
-                        </tr>
-                        <tr>
-                          <td>MT9835</td>
-                          <td>Đặng Hoàng Phúc	</td>
-                          <td>
-                            40.650.000 đ
-                          </td>
-                          <td><span className="badge bg-danger">Đã hủy	</span></td>
-                        </tr>
+                        {
+                          orders.map((order,index) => {
+                            if(index <5) {
+                              return (
+                                <tr key={index}>
+                                  <td>{order.order_id}</td>
+                                  <td>{order.name}</td>
+                                  <td>
+                                    ${order.total.toFixed(2)}
+                                  </td>
+                                  <td>
+                                    {
+                                        order.status==="wait"?
+                                        <span className="badge bg-warning">
+                                            Chờ xác nhận
+                                        </span>
+                                        :order.status=="confirm"?
+                                        <span className="badge bg-info">
+                                            Đã xác nhận
+                                        </span>
+                                        :order.status==="delivery"?
+                                        <span className="badge bg-primary">
+                                            Đang giao hàng
+                                        </span>
+                                        :order.status==="success"?
+                                        <span className="badge bg-success">
+                                            Thành công
+                                        </span>
+                                        :
+                                        <span className="badge bg-danger">
+                                            Hủy đơn
+                                        </span>
+                                    }
+                                    
+                                  </td>
+                                </tr>
+                              )
+                            }
+                          })
+                        }
                       </tbody>
                     </table>
                   </div>
@@ -127,35 +211,25 @@ export default function Home() {
                         <tr>
                           <th>ID</th>
                           <th>Tên khách hàng</th>
-                          <th>Ngày sinh</th>
                           <th>Số điện thoại</th>
+                          <th>Email</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>#183</td>
-                          <td>Hột vịt muối</td>
-                          <td>21/7/1992</td>
-                          <td><span className="tag tag-success">0921387221</span></td>
-                        </tr>
-                        <tr>
-                          <td>#219</td>
-                          <td>Bánh tráng trộn</td>
-                          <td>30/4/1975</td>
-                          <td><span className="tag tag-warning">0912376352</span></td>
-                        </tr>
-                        <tr>
-                          <td>#627</td>
-                          <td>Cút rang bơ</td>
-                          <td>12/3/1999</td>
-                          <td><span className="tag tag-primary">01287326654</span></td>
-                        </tr>
-                        <tr>
-                          <td>#175</td>
-                          <td>Hủ tiếu nam vang</td>
-                          <td>4/12/20000</td>
-                          <td><span className="tag tag-danger">0912376763</span></td>
-                        </tr>
+                        {
+                          users.map((user, index) => {
+                            if (index < 5) {
+                              return (
+                                <tr key={index}>
+                                  <td>{user.id}</td>
+                                  <td>{user.name}</td>
+                                  <td>{user.phone}</td>
+                                  <td><span className="tag tag-success">{user.email}</span></td>
+                                </tr>
+                              )
+                            }
+                          })
+                        }
                       </tbody>
                     </table>
                   </div>
@@ -166,7 +240,7 @@ export default function Home() {
           </div>
           {/*END left*/}
           {/*Right*/}
-          <div className="col-md-12 col-lg-6">
+          {/* <div className="col-md-12 col-lg-6">
             <div className="row">
               <div className="col-md-12">
                 <div className="tile">
@@ -185,7 +259,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           {/*END right*/}
         </div>
       </main></div>

@@ -1,8 +1,81 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from '../components/Header/Header'
 import Navbar from '../components/Navbar/Navbar'
+import adminApi from 'api/adminApi'
+import catalogAPI from '../../../api/catalogAPI'
+import userApi from 'api/userApi'
 
 export default function Report() {
+
+    const [countData, setCountData] = useState({
+        "countUser": 0,
+        "countProduct": 0,
+        "countOrder": 0,
+        "countOutOfStock": 0,
+        "countUsersBlock": 0,
+        "totalMoney": 0,
+        "countAdminMod": 0,
+        "countProductNo": 0,
+        "countOrdersCancel": 0
+    })
+
+    const [mostSold, setMostSold] = useState([
+        {
+            "name": "Laptop Acer Nitro 5 Gaming AN515",
+            "memory": "8GB, DDR4 2 khe",
+            "description": "Acer Nitro 5 Gaming AN515 57 727J i7 (NH.QD9SV.005.) sở hữu vẻ ngoài cá tính, nổi bật và được tích hợp bộ vi xử lý Intel thế hệ 11 tân tiến, card đồ hoạ rời NVIDIA GeForce RTX, hứa hẹn mang đến các trải nghiệm tuyệt vời cho người dùng.",
+            "status": "1",
+            "productId": 1,
+            "sold": 5,
+            "quantity": 5,
+            "battery": "4-cell Li-ion, 57 Wh",
+            "catalog": "Acer",
+            "graphics": "NVIDIA GeForce RTX3050Ti, 4 GB",
+            "image": "https://i.ibb.co/3F9wWqv/image.png",
+            "price": 1322.37,
+            "hardDrive": "512 GB SSD NVMe PCIe",
+            "os": "Windows 10 Home SL",
+            "processer": "i7, 11800H, 2.30GHz",
+            "wireless": "Bluetooth 5.1, Wi-Fi 6 (802.11ax)"
+        }
+    ]);
+
+    const [mostUser, setMostUser] = useState([]);
+
+    useEffect(() => {
+        async function getCountData() {
+            try {
+                const res = await adminApi.dashboard();
+                setCountData(res.data);
+
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        async function getMostSold() {
+            try {
+                const res = await catalogAPI.mostSold();
+                setMostSold(res.data);
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+        async function getMostUser() {
+            try {
+                const res = await userApi.mostUser();
+                setMostUser(res.data);
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+        getCountData();
+        getMostSold();
+        getMostUser();
+    }, [])
+
     return (
         <div>
         <Header/>
@@ -12,7 +85,7 @@ export default function Report() {
                     <div className="col-md-12">
                         <div className="app-title">
                             <ul className="app-breadcrumb breadcrumb">
-                                <li className="breadcrumb-item"><a href="/admin"><b>Báo cáo doanh thu  </b></a></li>
+                                <li className="breadcrumb-item"><a href="/admin"><b>Báo cáo</b></a></li>
                             </ul>
                             <div id="clock" />
                         </div>
@@ -22,8 +95,8 @@ export default function Report() {
                     <div className="col-md-6 col-lg-3">
                         <div className="widget-small primary coloured-icon"><i className="icon  bx bxs-user fa-3x" />
                             <div className="info">
-                                <h4>Tổng Nhân viên</h4>
-                                <p><b>26 nhân viên</b></p>
+                                <h4>Tài khoản đăng kí</h4>
+                                <p><b>{countData.countUser} tài khoản</b></p>
                             </div>
                         </div>
                     </div>
@@ -31,23 +104,23 @@ export default function Report() {
                         <div className="widget-small info coloured-icon"><i className="icon bx bxs-purchase-tag-alt fa-3x" />
                             <div className="info">
                                 <h4>Tổng sản phẩm</h4>
-                                <p><b>8580 sản phẩm</b></p>
+                                <p><b>{countData.countProduct} sản phẩm</b></p>
                             </div>
                         </div>
                     </div>
                     <div className="col-md-6 col-lg-3">
-                        <div className="widget-small warning coloured-icon"><i className="icon fa-3x bx bxs-shopping-bag-alt" />
+                        <div className="widget-small primary  coloured-icon"><i className="icon fa-3x bx bxs-shopping-bag-alt" />
                             <div className="info">
                                 <h4>Tổng đơn hàng</h4>
-                                <p><b>457 đơn hàng</b></p>
+                                <p><b>{countData.countOrder} đơn hàng</b></p>
                             </div>
                         </div>
                     </div>
                     <div className="col-md-6 col-lg-3">
-                        <div className="widget-small danger coloured-icon"><i className="icon fa-3x bx bxs-info-circle" />
+                        <div className="widget-small info coloured-icon"><i className="icon fa-3x bx bxs-info-circle" />
                             <div className="info">
-                                <h4>Bị cấm</h4>
-                                <p><b>4 nhân viên</b></p>
+                                <h4>Tổng tài khoản bị khóa</h4>
+                                <p><b>{countData.countUsersBlock} tài khoản</b></p>
                             </div>
                         </div>
                     </div>
@@ -57,31 +130,31 @@ export default function Report() {
                         <div className="widget-small primary coloured-icon"><i className="icon fa-3x bx bxs-chart" />
                             <div className="info">
                                 <h4>Tổng thu nhập</h4>
-                                <p><b>104.890.000 đ</b></p>
+                                <p><b>$ {countData.totalMoney.toFixed(2)}</b></p>
                             </div>
                         </div>
                     </div>
                     <div className="col-md-6 col-lg-3">
                         <div className="widget-small info coloured-icon"><i className="icon fa-3x bx bxs-user-badge" />
                             <div className="info">
-                                <h4>Nhân viên mới</h4>
-                                <p><b>3 nhân viên</b></p>
+                                <h4>Tổng quản trị viên</h4>
+                                <p><b>{countData.countAdminMod} quản trị viên</b></p>
                             </div>
                         </div>
                     </div>
                     <div className="col-md-6 col-lg-3">
-                        <div className="widget-small warning coloured-icon"><i className="icon fa-3x bx bxs-tag-x" />
+                        <div className="widget-small primary coloured-icon"><i className="icon fa-3x bx bxs-tag-x" />
                             <div className="info">
                                 <h4>Hết hàng</h4>
-                                <p><b>1 sản phẩm</b></p>
+                                <p><b>{countData.countProductNo} sản phẩm</b></p>
                             </div>
                         </div>
                     </div>
                     <div className="col-md-6 col-lg-3">
-                        <div className="widget-small danger coloured-icon"><i className="icon fa-3x bx bxs-receipt" />
+                        <div className="widget-small info coloured-icon"><i className="icon fa-3x bx bxs-receipt" />
                             <div className="info">
                                 <h4>Đơn hàng hủy</h4>
-                                <p><b>2 đơn hàng</b></p>
+                                <p><b>{countData.countOrdersCancel} đơn hàng</b></p>
                             </div>
                         </div>
                     </div>
@@ -99,40 +172,22 @@ export default function Report() {
                                             <th>Mã sản phẩm</th>
                                             <th>Tên sản phẩm</th>
                                             <th>Giá tiền</th>
-                                            <th>Danh mục</th>
+                                            <th>Số lượng đã bán</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>71309005</td>
-                                            <td>Bàn ăn gỗ Theresa</td>
-                                            <td>5.600.000 đ</td>
-                                            <td>Bàn ăn</td>
-                                        </tr>
-                                        <tr>
-                                            <td>62304003</td>
-                                            <td>Bàn ăn Vitali mặt đá</td>
-                                            <td>33.235.000 đ</td>
-                                            <td>Bàn ăn</td>
-                                        </tr>
-                                        <tr>
-                                            <td>72109004</td>
-                                            <td>Ghế làm việc Zuno</td>
-                                            <td>3.800.000 đ</td>
-                                            <td>Ghế gỗ</td>
-                                        </tr>
-                                        <tr>
-                                            <td>83826226</td>
-                                            <td>Tủ ly - tủ bát</td>
-                                            <td>2.450.000 đ</td>
-                                            <td>Tủ</td>
-                                        </tr>
-                                        <tr>
-                                            <td>71304041</td>
-                                            <td>Bàn ăn mở rộng Vegas</td>
-                                            <td>21.550.000 đ</td>
-                                            <td>Bàn thông minh</td>
-                                        </tr>
+                                        {
+                                            mostSold.map((product) => {
+                                                return (
+                                                    <tr>
+                                                        <td>{product.productId}</td>
+                                                        <td>{product.name}</td>
+                                                        <td>$ {product.price}</td>
+                                                        <td>{product.sold}</td>
+                                                    </tr>
+                                                )
+                                            })
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -143,73 +198,43 @@ export default function Report() {
                     <div className="col-md-12">
                         <div className="tile">
                             <div>
-                                <h3 className="tile-title">TỔNG ĐƠN HÀNG</h3>
+                                <h3 className="tile-title">Danh sách khách mua hàng nhiều</h3>
                             </div>
                             <div className="tile-body">
                                 <table className="table table-hover table-bordered" id="sampleTable">
                                     <thead>
                                         <tr>
-                                            <th>ID đơn hàng</th>
-                                            <th>Khách hàng</th>
-                                            <th>Đơn hàng</th>
-                                            <th>Số lượng</th>
-                                            <th>Tổng tiền</th>
+                                            <th>ID tài khoản</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Số đơn đã mua</th>
+                                            <th>Tổng tiền đã mua</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>MD0837</td>
-                                            <td>Triệu Thanh Phú</td>
-                                            <td>Ghế làm việc Zuno, Bàn ăn gỗ Theresa</td>
-                                            <td>2 sản phẩm</td>
-                                            <td>9.400.000 đ</td>
-                                        </tr>
-                                        <tr>
-                                            <td>MĐ8265</td>
-                                            <td>Nguyễn Thị Ngọc Cẩm</td>
-                                            <td>Ghế ăn gỗ Lucy màu trắng</td>
-                                            <td>1 sản phẩm</td>
-                                            <td>3.800.000 đ</td>
-                                        </tr>
-                                        <tr>
-                                            <td>MT9835</td>
-                                            <td>Đặng Hoàng Phúc</td>
-                                            <td>Giường ngủ Jimmy, Bàn ăn mở rộng cao cấp Dolas, Ghế làm việc Zuno</td>
-                                            <td>3 sản phẩm</td>
-                                            <td>40.650.000 đ</td>
-                                        </tr>
-                                        <tr>
-                                            <td>ER3835</td>
-                                            <td>Nguyễn Thị Mỹ Yến</td>
-                                            <td>Bàn ăn mở rộng Gepa</td>
-                                            <td>1 sản phẩm</td>
-                                            <td>16.770.000 đ</td>
-                                        </tr>
-                                        <tr>
-                                            <td>AL3947</td>
-                                            <td>Phạm Thị Ngọc</td>
-                                            <td>Bàn ăn Vitali mặt đá, Ghế ăn gỗ Lucy màu trắng</td>
-                                            <td>2 sản phẩm</td>
-                                            <td>19.770.000 đ</td>
-                                        </tr>
-                                        <tr>
-                                            <td>QY8723</td>
-                                            <td>Ngô Thái An</td>
-                                            <td>Giường ngủ Kara 1.6x2m</td>
-                                            <td>1 sản phẩm</td>
-                                            <td>14.500.000 đ</td>
-                                        </tr>
-                                        <tr>
-                                            <th colSpan={4}>Tổng cộng:</th>
+                                        {
+                                            mostUser.map((user) => {
+                                                return (
+                                                    <tr>
+                                                        <td>{user[0]}</td>
+                                                        <td>{user[1]}</td>
+                                                        <td>{user[2]}</td>
+                                                        <td>$ {user[3].toFixed(2)}</td>
+                                                    </tr>
+                                                )
+                                            })
+                                        }
+                                        
+                                        {/* <tr>
+                                            <th colSpan={3}>Tổng cộng:</th>
                                             <td>104.890.000 đ</td>
-                                        </tr>
+                                        </tr> */}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="row">
+                {/* <div className="row">
                     <div className="col-md-12">
                         <div className="tile">
                             <div>
@@ -310,7 +335,7 @@ export default function Report() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </main>
 
         </div>

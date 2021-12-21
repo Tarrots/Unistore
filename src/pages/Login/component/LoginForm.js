@@ -30,14 +30,14 @@ function LoginForm({ onLogin, error, setError }) {
               <br/>
 
               <form className="signin" onSubmit={submitHandler}>
-                  <input type="text" name="username" placeholder="Username" required="" className="form-control" 
+                  <input type="text" name="username" placeholder="Username" required={true} className="form-control" 
                   onChange={e => {
                     setDetails({...details, username: e.target.value});
                     setError("");
                   }}
                   value={details.username} />
                   <br/>
-                  <input type="password" name="password" placeholder="Password" required="" className="form-control" 
+                  <input type="password" name="password" placeholder="Password" required={true} className="form-control" 
                   onChange={e => {
                     setDetails({...details, password: e.target.value})
                     setError("");

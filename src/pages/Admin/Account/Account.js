@@ -1,14 +1,172 @@
-import React from 'react'
+import userApi from 'api/userApi'
+import React, { useState, useEffect } from 'react'
 import Header from '../components/Header/Header'
 import Navbar from '../components/Navbar/Navbar'
 import ElementButton  from './ElementButton/ElementButton'
 import TableData from './TableData/TableData'
+import Pagination from '../components/Pagination/Pagination'
+import ModalAccount from './ModalAccount/ModalAccount'
+import Alert from 'components/Alert/Alert'
+import authApi from 'api/authApi'
 
 export default function Account() {
+
+    const [alerts, setAlerts] = useState({type: "infor", text: "Quản lý tài khoản", action:false});
+
+    const [user, setUser] = useState({
+        "id": 0,
+        "username": "",
+        "email": "",
+        "password": "",
+        "roles": [
+            {
+                "id": 3,
+                "name": "ROLE_USER"
+            }
+        ],
+        "phone": "",
+        "enable": true,
+        "name": ""
+    })
+
+    const [data, setData] = useState(
+        {
+        status : "faild",
+        message : "Request products...",
+        data : [
+            {
+                "id": 0,
+                "username": "",
+                "email": "",
+                "password": "",
+                "roles": [
+                    {
+                        "id": 3,
+                        "name": "ROLE_USER"
+                    }
+                ],
+                "phone": "",
+                "enable": true,
+                "name": ""
+            }
+        ],
+        pagination: {
+            page : 1,
+            totalPage: 1,
+            totalRow: 1
+        }
+
+        }
+    );
+
+    const [page,setPage] = useState({ page : 1, limit: 10 });
+
+    useEffect(() => {
+        const fetchProductList = async () => {
+        try {
+            const response = await userApi.getAll(page);
+            setData(response);
+        } catch (error) {
+            console.log("Failed to fetch user list ", error);
+            setData({...data, status: "failed", message: "Failed to connect server"});
+        }
+        }
+
+        fetchProductList();
+    },[page])
+
+    useEffect(() => {
+        console.log(data)
+    },[data])
+
+    const handlePagination = (value) => {
+        
+        setPage({...page, page: value});
+    }
+
+    // Hide modal
+    const noneModal = () => {
+        const modal = document.getElementById('ModalUP');
+        modal.classList.remove("show");
+        modal.style.display = "none";
+    }
+
+    // Show modal
+    const showModal = (detail) => {
+        if(!detail=="")
+            {setUser(detail);}
+        else setUser({
+            "username": "",
+            "email": "",
+            "password": "",
+            "roles": [],
+            "phone": "",
+            "enable": true,
+            "name": ""
+        })
+        const modal = document.getElementById('ModalUP');
+        modal.classList.add("show");
+        modal.style.display = "block";
+    }
+
+    // Save
+    const save= async (newUser) => {
+        console.log(newUser)
+        if(newUser.username==="" || newUser.password==="" || newUser.email==="" || newUser.phone==="" || newUser.name==="") {
+            setAlerts({type: "warning", text: "Không được bỏ trống", action: true})
+            return null;
+        }
+
+        let regex =/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/;
+		
+		if(!regex.test(newUser.phone)) {
+			setAlerts({type: "warning", text: "Số điện thoại không chính xác", action: true})
+			return null;
+		} 
+
+        if(newUser.id) {
+            console.log("update");
+            try {
+                const res = await userApi.update(newUser)
+                alert("Update user successfully");
+                noneModal();
+                window.location.reload();
+            } catch (e) {
+                console.log(e);
+                alert("Update product failed");
+            }
+        } else {
+            console.log("add")
+            console.log(newUser)
+            try {
+                const res = await authApi.signup(newUser);
+                alert("Đăng kí thành công");
+                // setAlerts({type: "success", text: res.message, action: true})
+                noneModal();
+                window.location.reload();
+            } catch (e) {
+                console.log(e);
+                alert("Đăng kí không thành công");
+                
+            }
+        }
+    }
+
+    useEffect(() => {
+		const showAlert = () => {
+			const alert = document.getElementById('alert');
+			document.getElementById('alert').style.display = "block";
+
+			setTimeout(function() {alert.style.display='none'}, 2000);
+		}
+		showAlert();
+	},[alerts])
+
     return (
         <div>
         <Header/>
         <Navbar/>
+        <Alert type={alerts.type} text={alerts.text} action={alerts.action} />
             <div>
                 <main className="app-content">
                     <div className="app-title">
@@ -21,74 +179,17 @@ export default function Account() {
                         <div className="col-md-12">
                             <div className="tile">
                                 <div className="tile-body">
-                                    <ElementButton/>
-                                    <TableData/>
+                                    <ElementButton showModal={showModal}/>
+                                    <TableData data={data.data} showModal={showModal}/>
+                                    <Pagination page={data.pagination} handlePagination={handlePagination}/>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </main>
 
-                <div className="modal fade" id="ModalUP" tabIndex={-1} role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                    <div className="modal-dialog modal-dialog-centered" role="document">
-                        <div className="modal-content">
-                            <div className="modal-body">
-                                <div className="row">
-                                    <div className="form-group  col-md-12">
-                                        <span className="thong-tin-thanh-toan">
-                                            <h5>Chỉnh sửa thông tin nhân viên cơ bản</h5>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="form-group col-md-6">
-                                        <label className="control-label">ID nhân viên</label>
-                                        <input className="form-control" type="text" required defaultValue="#CD2187" disabled />
-                                    </div>
-                                    <div className="form-group col-md-6">
-                                        <label className="control-label">Họ và tên</label>
-                                        <input className="form-control" type="text" required defaultValue="Võ Trường" />
-                                    </div>
-                                    <div className="form-group  col-md-6">
-                                        <label className="control-label">Số điện thoại</label>
-                                        <input className="form-control" type="number" required defaultValue={123} />
-                                    </div>
-                                    <div className="form-group col-md-6">
-                                        <label className="control-label">Địa chỉ email</label>
-                                        <input className="form-control" type="text" required defaultValue="truong.vd2000@gmail.com" />
-                                    </div>
-                                    <div className="form-group col-md-6">
-                                        <label className="control-label">Ngày sinh</label>
-                                        <input className="form-control" type="date" defaultValue="15/03/2000" />
-                                    </div>
-                                    <div className="form-group  col-md-6">
-                                        <label htmlFor="exampleSelect1" className="control-label">Chức vụ</label>
-                                        <select className="form-control" id="exampleSelect1">
-                                            <option>Bán hàng</option>
-                                            <option>Tư vấn</option>
-                                            <option>Dịch vụ</option>
-                                            <option>Thu Ngân</option>
-                                            <option>Quản kho</option>
-                                            <option>Bảo trì</option>
-                                            <option>Kiểm hàng</option>
-                                            <option>Bảo vệ</option>
-                                            <option>Tạp vụ</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <br />
-                                <a href="/admin" style={{ float: 'right', fontWeight: 600, color: '#ea0000' }}>Chỉnh sửa nâng cao</a>
-                                <br />
-                                <br />
-                                <button className="btn btn-save" type="button">Lưu lại</button>
-                                <a className="btn btn-cancel" data-dismiss="modal" href="/admin">Hủy bỏ</a>
-                                <br />
-                            </div>
-                            <div className="modal-footer">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {/* Modal */}
+                <ModalAccount user={user} noneModal={noneModal} save={save}/>
             </div>
 
         </div>
